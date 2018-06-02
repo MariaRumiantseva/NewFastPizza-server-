@@ -8,7 +8,9 @@ class Order extends Model
     public static function getOrdersList()
     {
         $sql = "select * from orders where 1";
-        return App::$db->query($sql);
+        if (isset($sql)) {
+            return App::$db->query($sql);
+        }
     }
 
     //получить список заказов по IDs (orders)
@@ -18,7 +20,9 @@ class Order extends Model
             return null;
         }
         $sql = "select * from orders where id in (" . implode(',', $ids) . ")";
-        return App::$db->query($sql);
+        if (isset($sql)) {
+            return App::$db->query($sql);
+        }
     }
 
     //добавить заказ (orders)
@@ -69,6 +73,23 @@ class Order extends Model
     //удалить наименование меню из корзины клиента (order_details)
 
     //показать информацию об активном заказе для клиента  (orders)
+    public static function getActiveOrder($phone)
+    {
+        if (!$phone) {
+            return null;
+        }
+        $client_id = App::$db->query("SELECT id FROM clients WHERE phone_number = $phone");
+        if (isset($client_id)) {
+            $client_id = $client_id[0]["id"];
+            $query = "SELECT * FROM orders WHERE client_id = $client_id AND order_status != 'Delivered'";
+            if (isset($query)) {
+                return App::$db->query($query);
+            }
+        }
+        else {
+            return null;
+        }
+    }
 
     //вывод истории заказов для клиента (orders)
 

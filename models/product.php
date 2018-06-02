@@ -8,7 +8,9 @@ class Product extends Model
     public static function getProductsList()
     {
         $sql = "select * from menu";
-        return App::$db->query($sql);
+        if (isset($sql)) {
+            return App::$db->query($sql);
+        }
     }
 
     //получить список наименований меню по ID (menu)

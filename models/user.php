@@ -16,6 +16,18 @@ class User extends Model
         return false;
     }
 
+    //вывод информации о пользователе по номеру телефона-логин (users)
+    public static function getUserByPhone($phone)
+    {
+        $phone = App::$db->escape($phone);
+        $sql = "select * from clients where phone_number = '{$phone}' limit 1";
+        $result = App::$db->query($sql);
+        if (isset($result[0])) {
+            return $result[0];
+        }
+        return false;
+    }
+
     //вывод списка всех зарегистрированных пользователей (users)
 
     //вывод списка всех водителей (drivers)
