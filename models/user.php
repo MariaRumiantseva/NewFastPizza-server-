@@ -5,7 +5,7 @@ class User extends Model
     //написать функции-запросы к БД для пользователей
 
     //получение пользователя по логину (users)
-    public function getByLogin($login)
+    public function getUserByLogin($login)
     {
         $login = $this->db->escape($login);
         $sql = "select * from users where login = '{$login}' limit 1";
@@ -16,11 +16,11 @@ class User extends Model
         return false;
     }
 
-    //вывод информации о пользователе по номеру телефона-логин (users)
-    public static function getUserByPhone($phone)
+    //получение информации о пользователе по id (users)
+    public static function getUser($client_id)
     {
-        $phone = App::$db->escape($phone);
-        $sql = "select * from clients where phone_number = '{$phone}' limit 1";
+        $client_id = App::$db->escape($client_id);
+        $sql = "select * from clients where id = '{$client_id}' limit 1";
         $result = App::$db->query($sql);
         if (isset($result[0])) {
             return $result[0];

@@ -19,10 +19,10 @@ class UsersController extends Controller
 
     //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе
     public function index_userinfo(){
-        //получить тел.номер текущего пользователя (POST) и записать в $phone
-        $phone = 9998765432;
-        $this->data['userinfo'] = User::getUserByPhone($phone);
-        $this->data['activeorder'] = Order::getActiveOrder($phone);
+        //получить id текущего пользователя сессии и записать в $client_id
+        $client_id = 1;
+        $this->data['userinfo'] = User::getUser($client_id);
+        $this->data['activeorder'] = Order::getActiveOrder($client_id);
     }
 
 }
