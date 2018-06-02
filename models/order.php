@@ -67,8 +67,43 @@ class Order extends Model
     }
 
     //вывод текущей корзины клиента (order_details)
-
+    public function viewCurrentCart($client_id)
+    {
+        if (!$client_id ) {
+            return null;
+        }
+        $client_id = (int)$client_id;
+        $sql = "SELECT order_details.* 
+                FROM orders, order_details
+                WHERE orders.client_id =$client_id 
+                  AND orders.order_status='' 
+                  AND orders.id=order_details.order_id";
+        return App::$db->query($sql);
+    }
     //добавить наименование меню в корзину клиента (order_details)
+
+    public function addProductToCart($client_id/*$order_id*/, $dish_id, $quantity)
+    {
+            if (!$client_id and /*!$order_id and*/ !$dish_id and !$quantity) {
+                return null;
+            }
+            $client_id = (int)$client_id;
+           // $order_id = (int)$order_id;
+            $dish_id = (int)$dish_id;
+            $quantity = (int)$quantity;
+            $sql = "SELECT order_details.* 
+                    FROM orders, order_details
+                    WHERE orders.client_id =$client_id 
+                      AND orders.order_status='' 
+                      AND orders.id=order_details.order_id";
+            $sql2 = "INSERT INTO $sql values($dish_id, $quantity) ";
+            if (isset($sql)) {
+                return App::$db->query($sql2);
+            } else {
+                return null;
+            }
+    }
+
 
     //удалить наименование меню из корзины клиента (order_details)
     public function delete_dish($dish_id)
