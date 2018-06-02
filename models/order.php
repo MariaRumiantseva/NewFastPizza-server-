@@ -71,6 +71,18 @@ class Order extends Model
     //добавить наименование меню в корзину клиента (order_details)
 
     //удалить наименование меню из корзины клиента (order_details)
+    public function delete_dish($dish_id)
+    {
+        if (!$dish_id) {
+            return null;
+        }
+        $query = "DELETE FROM order_details WHERE dish_id = $dish_id";
+        if (isset($query)) {
+            return App::$db->query($query);}
+        else {
+            return null;
+        }
+    }
 
     //показать информацию об активном заказе для клиента  (orders)
     public static function getActiveOrder($client_id)
@@ -87,9 +99,55 @@ class Order extends Model
     }
 
     //вывод истории заказов для клиента (orders)
+    public function order_history($client_id)
+    {
+        if (!$client_id) {
+            return null;
+        }
+        $query = "SELECT * FROM orders WHERE client_id = $client_id";
+        if (isset($query)) {
+            return App::$db->query($query);}
+        else {
+            return null;
+        }
+    }
 
     //распределить заказ на водителя (orders -> driver_id)
+    public function order_select_driver($id, $driver_id)
+    {
+        if (!$id) {
+            return null;
+        }
+        if (!$driver_id) {
+            return null;
+        }
+        $id=(int)$id;
+        $query="UPDATE orders SET driver_id=$driver_id WHERE id=$id";
+        if (isset($query)) {
+            return App::$db->query($query);
+        }
+        else {
+            return null;
+        }
+    }
 
     //добавить статус доставки (orders -> order_status)
+    public function order_status($id, $status)
+    {
+        if (!$id) {
+            return null;
+        }
+        if (!$status) {
+            return null;
+        }
+        $id=(int)$id;
+        $query="UPDATE orders SET order_status=$status WHERE id=$id";
+        if (isset($query)) {
+            return App::$db->query($query);
+        }
+        else {
+            return null;
+        }
+    }
 
 }
