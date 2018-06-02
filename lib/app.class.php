@@ -41,8 +41,8 @@ class App{
             throw new Exception('Method '.$controller_method.' of class '.$controller_class.' does not exist.');
         }
 
-        $layout_path = VIEWS_PATH.DS.$layout.'.html';
-        $layout_view_object = new View(compact('content'), $layout_path);
+        $layout_path = VIEWS_PATH.DS.$layout.'.php';
+        $layout_view_object = new View($controller_object->getData(), $layout_path);
         echo $layout_view_object->render();
     }
 

@@ -12,7 +12,7 @@ class View{
             return false;
         }
         $controller_dir = $router->getController();
-        $template_name = $router->getMethodPrefix().$router->getAction().'.html';
+        $template_name = $router->getMethodPrefix().$router->getAction().'.php';
         return VIEWS_PATH.DS.$controller_dir.DS.$template_name;
     }
 
@@ -22,7 +22,7 @@ class View{
             return false;
         }
         $controller_dir = $router->getController();
-        $template_name = $router->getMethodPrefix().$router->getAction().'.html';
+        $template_name = $router->getMethodPrefix().$router->getAction().'.php';
         $path = VIEWS_PATH.DS.$controller_dir.DS.$template_name;
 
         if ( !$path ){

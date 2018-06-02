@@ -12,12 +12,6 @@ class ProductsController extends Controller
     {
         // Получить все товары (все пиццы)
         $this->data['menu'] = Product::getProductsList();
-        //$this->data['menu'] = $this->model->getProductsList();
-
-        //$content = Shop::getProductsList();
-        //$this->data['content'] = 'Products';
-        //$this->data['content'] = $this->model->getProductsList();
-
     }
 
     public function view()
@@ -62,7 +56,7 @@ class ProductsController extends Controller
             ob_start();
             $comment = $products_model->getById($product_id);
             //include VIEWS_PATH . DS . 'helpers' . DS . 'comment.html';
-            //добавить ссылку к представлению на .html
+            //добавить ссылку к представлению на .php (/views)
             $result = ob_get_clean();
             echo $result;
         } else {

@@ -7,7 +7,7 @@ class Product extends Model
     //получить список всех имеющихся наименований меню (menu)
     public static function getProductsList()
     {
-        $sql = "select * from menu where 1";
+        $sql = "select * from menu";
         return App::$db->query($sql);
     }
 
