@@ -24,13 +24,41 @@ class Product extends Model
     }
 
     //добавить наименование меню (menu)
-    public function add($item_id, $data)
+    public function add($item_id=null, $data)
     {
         //написать запрос на удаление наименования из меню
 
+        if (!isset($data['dish_name']) || !isset($data['description']) || !isset($data['price'])) {
+            return null;
+        }
+
+        $item_id = (int)$item_id;
+        $dish_name = $this->db->escape($data['dish_name']);
+        $description = $this->db->escape($data['description']);
+        $price = $this->db->escape($data['price']);
+
+        if (!$item_id)
+            $sql = "
+              insert into menu
+                set dish_name = {$dish_name},
+                    description = '{$description}',
+                    price = '{$price}'
+            ";
+        else
+            $sql = "
+              update into menu
+                set dish_name = {$dish_name},
+                    description = '{$description}',
+                    price = '{$price}'
+                    where id = {$item_id}
+            ";
+
+        return $this->db->query($sql);
+
+
 //        if (!isset($data['price']) || !isset($data['description'])) {
-//            return null;
-//        }
+////            return null;
+////        }
 //
 //        $item_id = (int)$item_id;
 //        $description = $this->db->escape($data['description']);
@@ -63,7 +91,7 @@ class Product extends Model
         if (!$item_id) {
             return null;
         }
-        $sql = "delete from menu WHERE id = $item_id ";
+        $sql = "delete from menu WHERE id = {$item_id} ";
         return App::$db->query($sql);
     }
 
