@@ -28,6 +28,30 @@ class User extends Model
         return false;
     }
 
+    // add new client
+    public function addClient($data, $id = null)
+    {
+        if (!isset($data['login']) || !isset($data['name'])
+            || !isset($data['address'])) {
+            return false;
+        }
+
+        $id = (int)$id;
+        $login = $this->db->escape($data['login']);
+        $password = 'jd7sj3sdkd964he7e' + $this->db->escape($data['password']);
+        $name = $this->db->escape($data['name']);
+        $address = $this->db->escape($data['address']);
+
+        $sql = "INSERT INTO `users` 
+                SET login = '{$login}', 
+                    password = md5({$password}), 
+                    role = 'client',
+                    name = '{$name}',
+                    address = '{$address}'";
+
+        return $this->db->query($sql);
+    }
+
     //вывод списка всех зарегистрированных пользователей (users)
 
     //вывод списка всех водителей (drivers)
