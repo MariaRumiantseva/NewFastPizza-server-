@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 03 2018 г., 16:00
+-- Время создания: Июн 03 2018 г., 17:21
 -- Версия сервера: 5.6.38
 -- Версия PHP: 5.5.38
 
@@ -111,8 +111,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `role`, `name`, `address`, `status`) VALUES
-(1, 'client1', '', 'client', 'Ivan', '1, Lenina', ''),
-(2, 'driver1', '', 'driver', '', '', 'Free');
+(1, 'client1', 'f1ccf9953a1371af2d41017be335cc34', 'client', 'Ivan', '1, Lenina', ''),
+(2, 'driver1', 'd3272b10ad84b8e808ab558d318b1cf5', 'driver', '', '', 'Free'),
+(3, 'admin', '44ca5fa5c67e434b9e779c5febc46f06', 'admin', '', '', '');
 
 --
 -- Индексы сохранённых таблиц
