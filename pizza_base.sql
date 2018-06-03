@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 03 2018 г., 17:21
+-- Время создания: Июн 03 2018 г., 17:57
 -- Версия сервера: 5.6.38
 -- Версия PHP: 5.5.38
 
@@ -111,9 +111,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `role`, `name`, `address`, `status`) VALUES
-(1, 'client1', 'f1ccf9953a1371af2d41017be335cc34', 'client', 'Ivan', '1, Lenina', ''),
+(1, '8900', 'f1ccf9953a1371af2d41017be335cc34', 'client', 'Ivan', '1, Lenina', ''),
 (2, 'driver1', 'd3272b10ad84b8e808ab558d318b1cf5', 'driver', '', '', 'Free'),
-(3, 'admin', '44ca5fa5c67e434b9e779c5febc46f06', 'admin', '', '', '');
+(3, 'admin', '44ca5fa5c67e434b9e779c5febc46f06', 'admin', '', '', ''),
+(4, '9201234567', '852650cb4477ae9b6f4f9d37b7aecf39', 'client', 'O', 'A', 'Free');
 
 --
 -- Индексы сохранённых таблиц
@@ -161,6 +162,12 @@ ALTER TABLE `menu`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
