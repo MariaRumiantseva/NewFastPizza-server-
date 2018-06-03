@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 02 2018 г., 22:20
+-- Время создания: Июн 03 2018 г., 16:00
 -- Версия сервера: 5.6.38
 -- Версия PHP: 5.5.38
 
@@ -21,48 +21,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `pizza_base`
 --
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `clients`
---
-
-CREATE TABLE `clients` (
-  `id` int(11) NOT NULL,
-  `phone_number` bigint(10) UNSIGNED NOT NULL COMMENT 'Phone number without first +7 or 8',
-  `name` text NOT NULL,
-  `password` text NOT NULL,
-  `address` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Дамп данных таблицы `clients`
---
-
-INSERT INTO `clients` (`id`, `phone_number`, `name`, `password`, `address`) VALUES
-(1, 9998765432, 'Ivan', 'Durak', 'Tsarstvo 3/9'),
-(2, 12345678911, 'A', 'aaa', '_');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `drivers`
---
-
-CREATE TABLE `drivers` (
-  `id` int(11) NOT NULL,
-  `login` text NOT NULL,
-  `password` text NOT NULL,
-  `status` enum('Free','Busy') DEFAULT 'Free'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Дамп данных таблицы `drivers`
---
-
-INSERT INTO `drivers` (`id`, `login`, `password`, `status`) VALUES
-(1, 'Fast', 'qwerty123', 'Free');
 
 -- --------------------------------------------------------
 
@@ -111,7 +69,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `client_id`, `driver_id`, `delivery_time`, `delivery_date`, `order_status`) VALUES
-(1, 1, 1, '12:30:00', '2018-05-24', 'Accepted');
+(1, 1, 2, '12:30:00', '2018-05-24', 'Accepted');
 
 -- --------------------------------------------------------
 
@@ -132,23 +90,33 @@ CREATE TABLE `order_details` (
 INSERT INTO `order_details` (`order_id`, `dish_id`, `quantity`) VALUES
 (1, 1, 2);
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `login` text NOT NULL,
+  `password` text,
+  `role` enum('admin','client','driver') NOT NULL,
+  `name` text,
+  `address` text,
+  `status` enum('Free','Busy') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `password`, `role`, `name`, `address`, `status`) VALUES
+(1, 'client1', '', 'client', 'Ivan', '1, Lenina', ''),
+(2, 'driver1', '', 'driver', '', '', 'Free');
+
 --
 -- Индексы сохранённых таблиц
 --
-
---
--- Индексы таблицы `clients`
---
-ALTER TABLE `clients`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `phone_number` (`phone_number`),
-  ADD UNIQUE KEY `id` (`id`);
-
---
--- Индексы таблицы `drivers`
---
-ALTER TABLE `drivers`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `menu`
@@ -162,7 +130,7 @@ ALTER TABLE `menu`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `client_id` (`client_id`),
-  ADD KEY `driver_id` (`driver_id`) USING BTREE;
+  ADD KEY `driver_id` (`driver_id`);
 
 --
 -- Индексы таблицы `order_details`
@@ -172,20 +140,14 @@ ALTER TABLE `order_details`
   ADD KEY `dish_id` (`dish_id`);
 
 --
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
-
---
--- AUTO_INCREMENT для таблицы `clients`
---
-ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT для таблицы `drivers`
---
-ALTER TABLE `drivers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `menu`
@@ -207,8 +169,8 @@ ALTER TABLE `orders`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `drivers` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `users` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `order_details`
