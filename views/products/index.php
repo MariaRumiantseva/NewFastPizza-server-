@@ -130,9 +130,12 @@
         </div><!-- .gallery -->
         <div class="section-delimiter"></div>
         <div class="margin-10"></div>
-        <div class="text-center signing-info"><em>Please, sign in for making order</em></div>
     </div><!-- .container -->
 </section>
+
+    <?php if (!Session::get('login')) { ?>
+        <div class="text-center signing-info"><em>Please, sign in for making order</em></div>
+    <?php } ?>
 
 <section id="cart">
     <div class="container">
