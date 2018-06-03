@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Client Personal Area Page</title>
+    <title>Sign In</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Vollkorn:400,700,400italic,700italic%7CPlayfair+Display:400,700' rel='stylesheet' type='text/css'>
@@ -23,17 +23,7 @@
                     <em class="site-name-info ">Call now: 222-222 <span class="text-uppercase">Pizza delivery</span></em>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <?php if (Session::get('login')) { ?>
-                    <?php if (Session::get('role') == 'client') { ?>
-                    Welcome, <em href="/users/index_userinfo/"><em
-                                class="client-name text-right"><?php echo Session::get('name') ?></em> <a
-                                href="/users/client_logout/" class="text-uppercase">Sign out</a>
-                        <?php } ?>
-                        <?php } else { ?>
-                                Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a
-                                        href="/users/client_registrate" class="text-uppercase">Create new account</a> |
-                                <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
-                            <?php } ?>
+                    Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a href="/users/client_registrate/" class="text-uppercase">Create new account</a> | <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
                 </div>
             </div>
         </div>
@@ -53,17 +43,8 @@
                     </div>
                     <nav id="main-navigation">
                         <ul id="one-page-nav">
-                            <li>
-                                <a href="/products/">Home</a>
-                            </li>
                             <li class="active">
-                                <a href="/users/index_userinfo/">Personal Area</a>
-                            </li>
-                            <li>
-                                <a href="delivery.html">Delivery</a>
-                            </li>
-                            <li>
-                                <div class="menu-item has-small-label cart-trigger"><i class="fa fa-shopping-cart"></i><span class="small-label"><span>2</span></span></div>
+                                <a href="/products/">Home</a>
                             </li>
                         </ul>
                     </nav>
@@ -76,61 +57,29 @@
 
 <section>
     <div class="container">
-        <h1 class="bottom-line">Personal Information</h1>
-        <div class="personal-info" class="row">
-            <div class="margin-40"></div>
-            <div class="col-md-6" class="text-left">
-                <div class="text-left">
-                    <p>First Name</p>
-                    <p>Phone Number</p>
+        <h1 class="bottom-line">Create New Account</h1>
+        <h3 class="text-center text-uppercase delivery-info">Please, enter your data for creating new account</h3>
+        <form method="post" action="/users/client_registrate/" class="text-center">
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="text" id="name" name="name" placeholder="Enter your name">
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-right">
-                    <p><em><?php echo $data["userinfo"]["name"];?></em></p>
-                    <p><em><?php echo $data["userinfo"]["login"];?></em></p>
+                <div class="col-sm-4">
+                    <input type="text" id="login" name="login" placeholder="Enter your phone number - login">
                 </div>
-            </div>
-        </div>
-    </div><!-- .row -->
-
-    <div class="section-delimiter"></div>
-
-    <div class="container">
-        <h1 class="bottom-line">Active Order</h1>
-        <div class="personal-info" class="row">
-            <div class="margin-40"></div>
-            <div class="col-md-6">
-                <div class="text-left">
-                    <p>Driver</p>
-                    <p>Delivery time</p>
-                    <p>Delivery date</p>
-                    <p>Order Status</p>
+                <div class="col-sm-4">
+                    <input type="text" id="password" name="password" placeholder="Enter password">
                 </div>
+                <!--<div class="col-sm-6">-->
+                <!--<input type="text" id="password" name="password" placeholder="Enter password for checking">-->
+                <!-- </div>-->
             </div>
-            <div class="col-md-6">
-                <div class="text-right">
-                    <p><em>"Driver Name"</em></p>
-                    <!--<p><em>--><?php //echo $data["activeorder"]["delivery_time"];?><!--</em></p>-->
-                    <p><em><?php echo $data["activeorder"][0]["delivery_time"];?></em></p>
-                    <p><em><?php echo $data["activeorder"][0]["delivery_date"];?></em></p>
-                    <p><em><?php echo $data["activeorder"][0]["order_status"];?></em></p>
-                </div>
-            </div>
-        </div>
-    </div><!-- .row -->
+            <div class="section-delimiter"></div>
+            <input type="submit" class="text-center" class="button-yellow button-long with-right-arrow form-submit-trigger" value="Create new account"/>
+        </form>
+        <div class="margin-20"></div>
 
-    <div class="section-delimiter"></div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="text-center">
-                <a class="button-yellow button-long with-right-arrow form-submit-trigger">See order history</a>
-            </div>
-        </div>
-    </div>
-
-    </div>
+    </div><!-- .container -->
 </section>
 
 <footer class="page-footer">
@@ -166,6 +115,12 @@
     </div>
     </div>
 </footer>
+
+</body>
+</html>
+</title>
+</head>
+<body>
 
 </body>
 </html>

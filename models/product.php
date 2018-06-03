@@ -24,10 +24,8 @@ class Product extends Model
     }
 
     //добавить наименование меню (menu)
-    public function add($item_id=null, $data)
+    public function add($item_id, $data)
     {
-        //написать запрос на удаление наименования из меню
-
         if (!isset($data['dish_name']) || !isset($data['description']) || !isset($data['price'])) {
             return null;
         }
@@ -54,8 +52,6 @@ class Product extends Model
             ";
 
         return $this->db->query($sql);
-
-
 //        if (!isset($data['price']) || !isset($data['description'])) {
 ////            return null;
 ////        }

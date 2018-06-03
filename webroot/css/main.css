@@ -2520,7 +2520,7 @@ input[type=submit] {
   width: 212px;
   height: 24px;
   margin: 60px auto;
-  background: url('../assets/images/section_delimiter.png') center center no-repeat;
+  background: url('../img/section_delimiter.png') center center no-repeat;
   background-position: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;

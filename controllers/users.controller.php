@@ -6,23 +6,83 @@ class UsersController extends Controller
     public function __construct($data = array())
     {
         parent::__construct($data);
+        $this->model = new User();
     }
 
-    //вход пользователя в систему
-    public function index()
+    //вход в систему для клиента
+    public function client_login()
+    {
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $user = $this->model->getUserByLogin($_POST['login']);
+            $hash = md5(Config::get('salt') . $_POST['password']);
+            if ($user && $hash == $user['password']) {
+                Session::set('login', $user['login']);
+                Session::set('name', $user['name']);
+                Session::set('role', $user['role']);
+            }
+            Router::redirect('/products/');
+        }
+    }
+
+    //регистрация клиента в системе
+    public function client_registrate()
     {
     }
 
-    //регистрация пользователя в системе
-    public function index_registration(){
+    //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе
+    public function index_userinfo()
+    {
+        $this->data['userinfo'] = User::getUser(Session::get('login'));
+        $this->data['activeorder'] = Order::getActiveOrder(Session::get('login'));
+    }
+    
+    //вход в систему для водителя
+    public function driver_login()
+    {
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $user = $this->model->getUserByLogin($_POST['login']);
+            $hash = md5(Config::get('salt') . $_POST['password']);
+            if ($user && $hash == $user['password']) {
+                Session::set('login', $user['login']);
+                Session::set('role', $user['role']);
+            }
+            Router::redirect('/products/');
+        }
     }
 
-    //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе
-    public function index_userinfo(){
-        //получить id текущего пользователя сессии и записать в $client_id
-        $client_id = 1;
-        $this->data['userinfo'] = User::getUser($client_id);
-        $this->data['activeorder'] = Order::getActiveOrder($client_id);
+    //вход в систему для администратора
+    public function admin_login()
+    {
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $user = $this->model->getUserByLogin($_POST['login']);
+            $hash = md5(Config::get('salt') . $_POST['password']);
+            if ($user && $hash == $user['password']) {
+                Session::set('login', $user['login']);
+                Session::set('role', $user['role']);
+            }
+            Router::redirect('/admin/');
+        }
+    }
+
+    //выход клиента из системы
+    public function client_logout()
+    {
+        Session::destroy();
+        Router::redirect('/products/');
+    }
+
+    //выход водителя из системы
+    public function driver_logout()
+    {
+        Session::destroy();
+        Router::redirect('/products/');
+    }
+
+    //выход администратора из системы
+    public function admin_logout()
+    {
+        Session::destroy();
+        Router::redirect('/admin/');
     }
 
 }

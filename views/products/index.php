@@ -32,7 +32,22 @@
                     <em class="site-name-info ">Call now: 222-222 <span class="text-uppercase">Pizza delivery</span></em>
                 </div>
                 <div class="col-xs-6 text-right">
-                    Welcome Guest, <a href="sign_in_Client.html" class="text-uppercase">Sign in</a> | <a href="registration_Client.html" class="text-uppercase">Create new account</a> | <a href="sign_in_Driver.html" class="text-uppercase">Sign in as driver</a>
+                    <?php if (Session::get('login')) { ?>
+                    <?php if (Session::get('role') == 'client') { ?>
+                    Welcome, <em href="/users/index_userinfo/"><em
+                                class="client-name text-right"><?php echo Session::get('name') ?></em> <a
+                                href="/users/client_logout/" class="text-uppercase">Sign out</a>
+                        <?php } ?>
+                        <?php if (Session::get('role') == 'driver') { ?>
+                        Welcome, <em href="/users/index_userinfo/"><em
+                                    class="client-name text-right"><?php echo Session::get('login') ?></em> <a
+                                    href="/users/client_logout/" class="text-uppercase">Sign out</a>
+                            <?php } ?>
+                            <?php } else { ?>
+                                Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a
+                                        href="/users/client_registrate" class="text-uppercase">Create new account</a> |
+                                <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
+                            <?php } ?>
                 </div>
             </div>
         </div>
@@ -53,8 +68,19 @@
                     <nav id="main-navigation">
                         <ul id="one-page-nav">
                             <li class="active">
-                                <a href="index.html">Home</a>
+                                <a href="/products/">Home</a>
                             </li>
+                            <?php if ( Session::get('login') && (Session::get('role') == 'client')) { ?>
+                                <li>
+                                    <a href=/users/index_userinfo/">Personal Area</a>
+                                </li>
+                                <li>
+                                    <a href="delivery.html">Delivery</a>
+                                </li>
+                                <li>
+                                    <div class="menu-item has-small-label cart-trigger"><i class="fa fa-shopping-cart"></i><span class="small-label"><span>2</span></span></div>
+                                </li>
+                            <?php }?>
                         </ul>
                     </nav>
                 </div><!-- .relative-container -->
@@ -63,6 +89,8 @@
     </div><!-- #main-navigation-container -->
     <div id="main-navigation-placeholder"></div>
 </header>
+
+<?php if ((Session::get('role') == 'client') || (!Session::get('login'))) { ?>
 
 <div class="page-title-img">
     <img class="img-full" alt="page title img" src="/webroot/img/headers/gallery.png">
@@ -84,6 +112,11 @@
                     </div>
                     <div class="gallery-item-detail">
                         <div class="text-center">
+                            <?php if ( Session::get('login') ) { ?>
+                            <p>
+                                <a href="#" class="gallery-detail-icon"><i class="fa fa-check"></i></a>
+                            </p>
+                            <?php } ?>
                             <h4 class="gallery-item-heading">
                                 <?php echo $value["dish_name"]; ?>
                             </h4>
@@ -111,7 +144,7 @@
             <form>
                 <div class="product-preview-small">
                     <div class="product-img">
-                        <img alt="product photo" src="assets/images/products/1_small.png">
+                        <img alt="product photo" src="/webroot/img/products/1_small.png">
                     </div>
                     <div class="product-content">
                         <div class="row">
@@ -211,6 +244,8 @@
         </div><!-- .cart-content -->
     </div><!-- .container -->
 </section><!-- #cart -->
+
+<?php }?>
 
 <footer class="page-footer">
     <div class="container">

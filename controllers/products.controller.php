@@ -14,19 +14,6 @@ class ProductsController extends Controller
         $this->data['menu'] = Product::getProductsList();
     }
 
-    public function view()
-    {
-//        $params = App::getRouter()->getParams();
-//
-//        if (isset($params[0])) {
-//            $alias = strtolower($params[0]);
-//            $this->data['page'] = $this->model->getByAlias($alias);
-//        }
-//
-//        $comments_model = new Comment();
-//        $this->data['comments'] = $comments_model->getByPageId($this->data['page']['id']);
-    }
-
     /*
      * Функции администрирования
     */

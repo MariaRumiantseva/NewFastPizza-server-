@@ -26,7 +26,7 @@ class Order extends Model
     }
 
     //добавить заказ (orders)
-    public function add($data, $id = null)
+    public function addOrder($data, $id = null)
     {
         if (!isset($data['name']) || !isset($data['email']) || !isset($data['message'])) {
             return false;
@@ -39,23 +39,21 @@ class Order extends Model
 
         if (!$id) { // Add new record
             $sql = "
-                insert into messages
+                insert into order
                    set name = '{$name}',
                        email = '{$email}',
                        message = '{$message}'
             ";
         } else { // Update existing record
             $sql = "
-                update messages
+                update order
                    set name = '{$name}',
                        email = '{$email}',
                        message = '{$message}'
                    where id = {$id}
             ";
         }
-
         return $this->db->query($sql);
-
     }
 
     //удалить заказ (orders)
@@ -69,7 +67,7 @@ class Order extends Model
     //вывод текущей корзины клиента (order_details)
     public function viewCurrentCart($client_id)
     {
-        if (!$client_id ) {
+        if (!$client_id) {
             return null;
         }
         $client_id = (int)$client_id;
@@ -80,30 +78,30 @@ class Order extends Model
                   AND orders.id=order_details.order_id";
         return App::$db->query($sql);
     }
-    //добавить наименование меню в корзину клиента (order_details)
 
+    //добавить наименование меню в корзину клиента (order_details)
     public function addProductToCart($client_id/*$order_id*/, $dish_id, $quantity)
     {
-            if (!$client_id and /*!$order_id and*/ !$dish_id and !$quantity) {
-                return null;
-            }
-            $client_id = (int)$client_id;
-           // $order_id = (int)$order_id;
-            $dish_id = (int)$dish_id;
-            $quantity = (int)$quantity;
-            $sql = "SELECT order_details.* 
+        if (!$client_id and /*!$order_id and*/
+            !$dish_id and !$quantity) {
+            return null;
+        }
+        $client_id = (int)$client_id;
+        // $order_id = (int)$order_id;
+        $dish_id = (int)$dish_id;
+        $quantity = (int)$quantity;
+        $sql = "SELECT order_details.* 
                     FROM orders, order_details
                     WHERE orders.client_id =$client_id 
                       AND orders.order_status='' 
                       AND orders.id=order_details.order_id";
-            $sql2 = "INSERT INTO $sql values($dish_id, $quantity) ";
-            if (isset($sql)) {
-                return App::$db->query($sql2);
-            } else {
-                return null;
-            }
+        $sql2 = "INSERT INTO $sql values($dish_id, $quantity) ";
+        if (isset($sql)) {
+            return App::$db->query($sql2);
+        } else {
+            return null;
+        }
     }
-
 
     //удалить наименование меню из корзины клиента (order_details)
     public function delete_dish($dish_id)
@@ -113,25 +111,31 @@ class Order extends Model
         }
         $query = "DELETE FROM order_details WHERE dish_id = $dish_id";
         if (isset($query)) {
-            return App::$db->query($query);}
-        else {
+            return App::$db->query($query);
+        } else {
             return null;
         }
     }
 
     //показать информацию об активном заказе для клиента  (orders)
-    public static function getActiveOrder($client_id)
+    public static function getActiveOrder($login)
     {
-        if (!$client_id) {
+        if (!$login) {
             return null;
         }
-        $query = "SELECT * FROM orders WHERE client_id = $client_id AND order_status != 'Delivered'";
+        $query = "SELECT id FROM users WHERE login = $login AND role = 'client'";
         if (isset($query)) {
-            return App::$db->query($query);}
-        else {
-            return null;
+            $client_id = App::$db->query($query);
+            if (isset($client_id)) {
+                $query = "SELECT * FROM orders WHERE client_id = '{$client_id[0]['id']}' AND order_status != 'Delivered'";
+                if (isset($query)) {
+                    return App::$db->query($query);
+                }
+            }
         }
+        return null;
     }
+
 
     //вывод истории заказов для клиента (orders)
     public function order_history($client_id)
@@ -141,8 +145,8 @@ class Order extends Model
         }
         $query = "SELECT * FROM orders WHERE client_id = $client_id";
         if (isset($query)) {
-            return App::$db->query($query);}
-        else {
+            return App::$db->query($query);
+        } else {
             return null;
         }
     }
@@ -156,12 +160,11 @@ class Order extends Model
         if (!$driver_id) {
             return null;
         }
-        $id=(int)$id;
-        $query="UPDATE orders SET driver_id=$driver_id WHERE id=$id";
+        $id = (int)$id;
+        $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$id";
         if (isset($query)) {
             return App::$db->query($query);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -175,12 +178,11 @@ class Order extends Model
         if (!$status) {
             return null;
         }
-        $id=(int)$id;
-        $query="UPDATE orders SET order_status=$status WHERE id=$id";
+        $id = (int)$id;
+        $query = "UPDATE orders SET order_status=$status WHERE id=$id";
         if (isset($query)) {
             return App::$db->query($query);
-        }
-        else {
+        } else {
             return null;
         }
     }
