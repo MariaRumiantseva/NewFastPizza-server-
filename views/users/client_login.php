@@ -23,7 +23,7 @@
                     <em class="site-name-info ">Call now: 222-222 <span class="text-uppercase">Pizza delivery</span></em>
                 </div>
                 <div class="col-xs-6 text-right">
-                    Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a href="/users/client_registrate/" class="text-uppercase">Create new account</a> | <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
+                    Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a href="/users/client_registration/" class="text-uppercase">Create new account</a> | <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     <input type="text" id="login" name="login" placeholder="Mobile Phone 9991112233">
                 </div>
                 <div class="col-sm-6">
-                    <input type="text" id="password" name="password" placeholder="Password">
+                    <input type="password" id="password" name="password" placeholder="Password">
                 </div>
             </div>
             <div class="section-delimiter"></div>

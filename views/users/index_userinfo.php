@@ -31,7 +31,7 @@
                         <?php } ?>
                         <?php } else { ?>
                                 Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a
-                                        href="/users/client_registrate" class="text-uppercase">Create new account</a> |
+                                        href="/users/client_registration/" class="text-uppercase">Create new account</a> |
                                 <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
                             <?php } ?>
                 </div>
@@ -100,23 +100,26 @@
         <h1 class="bottom-line">Active Order</h1>
         <div class="personal-info" class="row">
             <div class="margin-40"></div>
-            <div class="col-md-6">
-                <div class="text-left">
-                    <p>Driver</p>
-                    <p>Delivery time</p>
-                    <p>Delivery date</p>
-                    <p>Order Status</p>
+            <?php if ($data["activeorder"]) { ?>
+                <div class="col-md-6">
+                    <div class="text-left">
+                        <p>Driver</p>
+                        <p>Delivery time</p>
+                        <p>Delivery date</p>
+                        <p>Order Status</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-right">
-                    <p><em>"Driver Name"</em></p>
-                    <!--<p><em>--><?php //echo $data["activeorder"]["delivery_time"];?><!--</em></p>-->
-                    <p><em><?php echo $data["activeorder"][0]["delivery_time"];?></em></p>
-                    <p><em><?php echo $data["activeorder"][0]["delivery_date"];?></em></p>
-                    <p><em><?php echo $data["activeorder"][0]["order_status"];?></em></p>
+                <div class="col-md-6">
+                    <div class="text-right">
+                        <p><em>"Driver Name"</em></p>
+                        <p><em><?php echo $data["activeorder"][0]["delivery_time"]; ?></em></p>
+                        <p><em><?php echo $data["activeorder"][0]["delivery_date"]; ?></em></p>
+                        <p><em><?php echo $data["activeorder"][0]["order_status"]; ?></em></p>
+                    </div>
                 </div>
-            </div>
+            <?php } else { ?>
+                <p><em><div class="text-center">You have no active orders</div></em></p>
+            <?php } ?>
         </div>
     </div><!-- .row -->
 

@@ -44,8 +44,8 @@
                                     href="/users/client_logout/" class="text-uppercase">Sign out</a>
                             <?php } ?>
                             <?php } else { ?>
-                                Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a
-                                        href="/users/client_registrate" class="text-uppercase">Create new account</a> |
+                                Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> |
+                                <a href="/users/client_registration/" class="text-uppercase">Create new account</a> |
                                 <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
                             <?php } ?>
                 </div>
