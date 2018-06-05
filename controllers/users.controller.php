@@ -69,9 +69,15 @@ class UsersController extends Controller
             if ($user && $hash == $user['password']) {
                 Session::set('login', $user['login']);
                 Session::set('role', $user['role']);
+                Router::redirect('/admin/users/');
             }
-            Router::redirect('/admin/');
+           else
+               Router::redirect('/admin/users/login');
         }
+    }
+
+    public function admin_index()
+    {
     }
 
     //выход клиента из системы
@@ -92,7 +98,7 @@ class UsersController extends Controller
     public function admin_logout()
     {
         Session::destroy();
-        Router::redirect('/admin/');
+        Router::redirect('/admin/users/login');
     }
 
 }
