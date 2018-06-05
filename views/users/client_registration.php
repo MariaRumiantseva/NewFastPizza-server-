@@ -23,7 +23,7 @@
                     <em class="site-name-info ">Call now: 222-222 <span class="text-uppercase">Pizza delivery</span></em>
                 </div>
                 <div class="col-xs-6 text-right">
-                    Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a href="/users/client_registrate/" class="text-uppercase">Create new account</a> | <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
+                    Welcome Guest, <a href="/users/client_login/" class="text-uppercase">Sign in</a> | <a href="/users/client_registration/" class="text-uppercase">Create new account</a> | <a href="/users/driver_login/" class="text-uppercase">Sign in as driver</a>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
     <div class="container">
         <h1 class="bottom-line">Create New Account</h1>
         <h3 class="text-center text-uppercase delivery-info">Please, enter your data for creating new account</h3>
-        <form method="post" action="/users/client_registrate/" class="text-center">
+        <form method="post" action="/users/client_registration/" class="text-center">
             <div class="row">
                 <div class="col-sm-4">
                     <input type="text" id="name" name="name" placeholder="Enter your name">
@@ -68,10 +68,10 @@
                     <input type="text" id="login" name="login" placeholder="Enter your phone number - login">
                 </div>
                 <div class="col-sm-4">
-                    <input type="text" id="password" name="password" placeholder="Enter password">
+                    <input type="password" id="password" name="password" placeholder="Enter password">
                 </div>
                 <!--<div class="col-sm-6">-->
-                <!--<input type="text" id="password" name="password" placeholder="Enter password for checking">-->
+                <!--<input type="password" id="password" name="password" placeholder="Enter password for checking">-->
                 <!-- </div>-->
             </div>
             <div class="section-delimiter"></div>
@@ -115,12 +115,6 @@
     </div>
     </div>
 </footer>
-
-</body>
-</html>
-</title>
-</head>
-<body>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 03 2018 г., 17:57
+-- Время создания: Июн 05 2018 г., 00:26
 -- Версия сервера: 5.6.38
 -- Версия PHP: 5.5.38
 
@@ -61,7 +61,7 @@ CREATE TABLE `orders` (
   `driver_id` int(11) NOT NULL,
   `delivery_time` time NOT NULL,
   `delivery_date` date NOT NULL,
-  `order_status` enum('Accepted','In progress','Delivered') NOT NULL DEFAULT 'Accepted'
+  `order_status` enum('Not delivered','Delivered') NOT NULL DEFAULT 'Not delivered'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `client_id`, `driver_id`, `delivery_time`, `delivery_date`, `order_status`) VALUES
-(1, 1, 2, '12:30:00', '2018-05-24', 'Accepted');
+(1, 1, 2, '12:30:00', '2018-05-24', 'Not delivered');
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE `users` (
   `role` enum('admin','client','driver') NOT NULL,
   `name` text,
   `address` text,
-  `status` enum('Free','Busy') NOT NULL
+  `status` enum('Free','Busy','Off work') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -114,7 +114,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `role`, `name`, `address`, `stat
 (1, '8900', 'f1ccf9953a1371af2d41017be335cc34', 'client', 'Ivan', '1, Lenina', ''),
 (2, 'driver1', 'd3272b10ad84b8e808ab558d318b1cf5', 'driver', '', '', 'Free'),
 (3, 'admin', '44ca5fa5c67e434b9e779c5febc46f06', 'admin', '', '', ''),
-(4, '9201234567', '852650cb4477ae9b6f4f9d37b7aecf39', 'client', 'O', 'A', 'Free');
+(4, '9201234567', '852650cb4477ae9b6f4f9d37b7aecf39', 'client', 'O', 'A', NULL);
 
 --
 -- Индексы сохранённых таблиц

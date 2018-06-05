@@ -25,8 +25,18 @@ class UsersController extends Controller
     }
 
     //регистрация клиента в системе
-    public function client_registrate()
+    public function client_registration()
     {
+        if ($_POST && isset($_POST['name']) && isset($_POST['login']) && isset($_POST['password'])) {
+            $user = $this->model->addClient($_POST);
+            if ($user) {
+                $user = $this->model->getUserByLogin($_POST['login']);
+                Session::set('login', $user['login']);
+                Session::set('name', $user['name']);
+                Session::set('role', $user['role']);
+            }
+            Router::redirect('/products/');
+        }
     }
 
     //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе
@@ -35,7 +45,7 @@ class UsersController extends Controller
         $this->data['userinfo'] = User::getUser(Session::get('login'));
         $this->data['activeorder'] = Order::getActiveOrder(Session::get('login'));
     }
-    
+
     //вход в систему для водителя
     public function driver_login()
     {
