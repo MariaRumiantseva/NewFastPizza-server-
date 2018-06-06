@@ -1,5 +1,5 @@
 <h3>Administration Login Form</h3><br/>
-<form method="post" action="">
+<form method="post" action="/admin/users/login/">
     <div class="form-group">
         <label for="login">Login</label>
         <input type="text" id="login" name="login" class="form-control" />
@@ -8,7 +8,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" class="form-control" />
     </div>
-    <input type="submit" class="btn btn-success" />
+    <input type="submit" class="btn btn-success"/>
 </form>
 
 <?php ?>
