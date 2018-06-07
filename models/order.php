@@ -24,34 +24,45 @@ class Order extends Model
     }
 
     //добавить заказ (orders)
-    public function addOrder($data, $id = null)
+    public function addNewOrder($hour, $minute, $cart, $login)//$data, $id = null)
     {
-        if (!isset($data['name']) || !isset($data['email']) || !isset($data['message'])) {
+        if (!isset($hour) || !isset($minute) || !isset($cart) || !isset($login)) {
             return false;
         }
 
-        $id = (int)$id;
-        $name = $this->db->escape($data['name']);
-        $email = $this->db->escape($data['email']);
-        $message = $this->db->escape($data['message']);
+        $sql = "SELECT COUNT(*) FROM orders";
+        $id = $this->db->query($sql);
+        $id = (int)$id[0] + 1;
+        $client_id = User::getUser($login);
+        $client_id = $client_id['id'];
+        $driver = $this->selectDriverForOrder();
+        $driver_id = $driver['id'];
 
-        if (!$id) { // Add new record
-            $sql = "
-                insert into order
-                   set name = '{$name}',
-                       email = '{$email}',
-                       message = '{$message}'
-            ";
-        } else { // Update existing record
-            $sql = "
-                update order
-                   set name = '{$name}',
-                       email = '{$email}',
-                       message = '{$message}'
-                   where id = {$id}
-            ";
+        $hour = $hour;
+        $minute = $minute;
+        $date = $hour+$minute+"00";
+        $time = date('s:i:H', $date);
+
+        if ($id) { // Add new order (in orders, order_details)
+            $sql = "INSERT INTO orders
+                    SET id = $id,
+                    client_id = $client_id,
+                    driver_id = $driver_id,
+                    delivery_time = {$date},
+                    order_status = 'Not delivered'";
+
+            if (App::$db->query($sql))
+            {
+                foreach ($cart as $inner_key => $value) {
+                    $sql = "INSERT INTO order_details SET order_id = $id, dish_id = $inner_key, quantity = $value";
+                    App::$db->query($sql);
+                }
+            }
+            //set driver status to busy
+            $driver_login = $driver['login'];
+            (new User())->setDriverStatus($driver_login, 'Busy');
         }
-        return $this->db->query($sql);
+        return null;
     }
 
     //удалить заказ (orders)
@@ -165,18 +176,19 @@ class Order extends Model
     }
 
     //распределить заказ на водителя (orders -> driver_id)
-    public function selectDriverForOrder($order_id)
+    public function selectDriverForOrder()//($order_id)
     {
-        if (!$order_id) {
-            return null;
-        }
-        $query = "SELECT id FROM users WHERE role='driver' and status='Free' limit 1";
+//        if (!$order_id) {
+//            return null;
+//        }
+        $query = "SELECT * FROM users WHERE role='driver' and status='Free' limit 1";
         $driver_id = App::$db->query($query);
         if (isset($driver_id)) {
-            $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$order_id";
-            if ($query = App::$db->query($query)) {
-                return $query;
-            }
+            return $driver_id[0];
+//            $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$order_id";
+//            if ($query = App::$db->query($query)) {
+//                return $query;
+//            }
         }
         return null;
     }

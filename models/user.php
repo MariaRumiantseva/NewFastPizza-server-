@@ -30,7 +30,7 @@ class User extends Model
     public function addUserAddress($login, $address)
     {
         $address = $this->db->escape($address);
-        $query = "UPDATE users SET address=$address WHERE login='{$login}''";
+        $query = "UPDATE users SET address='{$address}' WHERE login={$login}";
         if ($query = $this->db->query($query)) {
             return $query;
         }
