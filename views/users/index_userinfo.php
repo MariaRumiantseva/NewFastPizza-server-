@@ -60,7 +60,7 @@
                                 <a href="/users/index_userinfo/">Personal Area</a>
                             </li>
                             <li>
-                                <a href="/orders/">Delivery</a>
+                                <div class="has-small-label"><a href="/orders/">Delivery</a><span class="small-label"><span><?php echo (array_sum(Session::get('cart')));?></span></span></div>
                             </li>
                         </ul>
                     </nav>

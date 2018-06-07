@@ -81,13 +81,12 @@ class Product extends Model
     }
 
     //удалить наименование меню (menu)
-    public function delete($item_id)
+    public function deleteItem($item_id)
     {
-        //написать запрос на удаление наименования из меню
         if (!$item_id) {
             return null;
         }
-        $sql = "delete from menu WHERE id = {$item_id} ";
+        $sql = "DELETE FROM menu WHERE id = {$item_id} ";
         return App::$db->query($sql);
     }
 

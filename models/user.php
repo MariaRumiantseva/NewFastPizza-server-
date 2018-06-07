@@ -83,8 +83,22 @@ class User extends Model
     }
 
     //добавление нового водителя (drivers)
+    public function  addDriver($login, $password)
+    {
+        $login = $this->db->escape($login);
+        $password = 'jd7sj3sdkd964he7e' + $this->db->escape($password);
+        $sql = "INSERT INTO users SET login = '{$login}', password = md5({$password}), role = 'driver', status = 'Off work'";
+        return $this->db->query($sql);
+    }
 
     //удаление водителя (drivers)
+    public function deleteDriver($driver_id)
+    {
+        $sql = "DELETE FROM users WHERE id = '{$driver_id}' AND role='driver'";
+        if ($delete = App::$db->query($sql)) {
+            return $delete;
+        }
+    }
 
     //изменение рабочего статуса для водителя (drivers -> status)
 

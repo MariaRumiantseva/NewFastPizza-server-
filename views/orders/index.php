@@ -60,7 +60,7 @@
                                 <a href="/users/index_userinfo/">Personal Area</a>
                             </li>
                             <li class="active">
-                                <a href="/orders/">Delivery</a>
+                                <div class="has-small-label"><a href="/orders/">Delivery</a><span class="small-label"><span><?php echo (array_sum(Session::get('cart')));?></span></span></div>
                             </li>
                         </ul>
                     </nav>
@@ -106,10 +106,46 @@
         </form>
         <div class="section-delimiter"></div>
         <form class="text-center">
+            <?php if(count(Session::get('cart'))) { ?>
             <h3 class="text-uppercase delivery-info">Please, check your order</h3>
-            <p>Show shopping cart from database</p>
+            <section>
+                <div class="container">
+                    <div id="gallery" class="gallery row">
+                        <div class="col-md-3 col-sm-6 col-xs-12 grid-sizer dark-cover"></div><!-- basic size of the grid -->
+                        <?php foreach (Session::get('cart') as $inner_key => $value) {?>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="product-preview">
+                                    <div class="product-photo">
+                                        <img alt="photo" src="/webroot/img/gallery/gallery8.jpg">
+                                        <div class="product-price">
+                                            <?php echo $value; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gallery-item-detail">
+                                    <div class="text-center">
+                                        <h4 class="gallery-item-heading">
+                                            <?php echo $value["dish_name"]; ?>
+                                        </h4>
+                                        <p class="product-info">
+                                            <?php echo $value["description"]; ?>
+                                        </p>
+                                        <p>
+                                            <a href="/orders/deleteOrderItem/<?php echo($inner_key);?>"
+                                               class="gallery-detail-icon"><i class="fa fa-remove" style="position:absolute; right:0;"></i></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div><!-- .gallery-item -->
+                        <?php } ?>
+                    </div><!-- .gallery -->
+                    <div class="section-delimiter"></div>
+                    <div class="margin-10"></div>
+                </div><!-- .container -->
+            </section>
             <div class="margin-30"></div>
             <a href="personal_area.html" class="button-yellow button-long with-right-arrow form-submit-trigger">MAKE YOUR ORDER</a>
+            <?php } else {?><h3 class="text-uppercase delivery-info">You haven't chosen any items yet</h3><?php } ?>
         </form>
         <div class="margin-20"></div>
     </div><!-- .container -->

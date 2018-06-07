@@ -86,6 +86,20 @@ class UsersController extends Controller
         }
     }
 
+    //добавление водителя
+    public function admin_add_driver(){
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $this->model->addDriver($_POST['login'],$_POST['password']);
+        }
+        Router::redirect('/admin/users/');
+    }
+
+    //удаление водителя
+    public function admin_delete_driver(){
+        $this->model->deleteDriver(App::getRouter()->getParams()[0]);
+        Router::redirect('/admin/users/');
+    }
+
     //выход клиента из системы
     public function client_logout()
     {

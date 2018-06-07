@@ -91,10 +91,11 @@ class ProductsController extends Controller
     }
 
     //удаление наименования меню
-    public function admin_delete()
+    public function admin_delete_menu_item()
     {
+        //App::getRouter()->getParams()[0];
         if (isset($this->params[0])) {
-            $result = $this->model->delete($this->params[0]);
+            $result = $this->model->deleteItem($this->params[0]);
             if ($result) {
                 Session::setFlash('Menu item was deleted');
             } else {

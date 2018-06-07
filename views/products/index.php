@@ -75,7 +75,7 @@
                                     <a href=/users/index_userinfo/">Personal Area</a>
                                 </li>
                                 <li>
-                                    <a href="/orders/">Delivery</a>
+                                    <div class="has-small-label"><a href="/orders/">Delivery</a><span class="small-label"><span><?php echo (array_sum(Session::get('cart')));?></span></span></div>
                                 </li>
                             <?php }?>
                         </ul>
@@ -111,7 +111,8 @@
                         <div class="text-center">
                             <?php if ( Session::get('login') ) { ?>
                             <p>
-                                <a href="#" class="gallery-detail-icon"><i class="fa fa-check"></i></a>
+                                <?php if (!Session::get('cart')) { $arrayItems = array(); Session::set('cart', $arrayItems); } ?>
+                                <a href="/orders/addOrderItem/<?php echo($value["id"]);?>" class="gallery-detail-icon"><i class="fa fa-check"></i></a>
                             </p>
                             <?php } ?>
                             <h4 class="gallery-item-heading">

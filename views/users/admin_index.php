@@ -46,6 +46,7 @@
                         <th>ID</th>
                         <th>Login</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <?php foreach ($data["drivers"] as $inner_key => $value) { ?>
@@ -54,13 +55,22 @@
                             <td><?php echo($value['id']); ?></td>
                             <td><?php echo($value['login']); ?></td>
                             <td><?php echo($value['status']); ?></td>
+                            <td><a class="fa fa-remove" href="/admin/users/delete_driver/<?php echo($value['id']); ?>" value="Delete"/></td>
                         </tr>
                         </tbody>
                     <?php } ?>
                     <tr>
-                        <td><input method="post" type="submit" a href="/admin/users/addDriver/"value="Add driver"></td>
-                        <td><input name="login" type="text" placeholder="Login"></td>
-                        <td><input name="status" type="text" placeholder="Status"></td>
+                        <form method="post" action="/admin/users/add_driver/" class="text-center">
+                            <td>
+                                <input type="submit" value="Add Driver"/>
+                            </td>
+                            <td>
+                                <input type="text" id="login" name="login" placeholder="Login"/>
+                                <input type="password" id="password" name="password" type="text" placeholder="Password"/>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </form>
                     </tr>
                 </table>
                 <?php } else { ?>
@@ -171,6 +181,7 @@
                         <th>Dish name</th>
                         <th>Description</th>
                         <th>Price</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <?php foreach ($data["menu"] as $inner_key => $value) { ?>
@@ -180,6 +191,7 @@
                             <td><?php echo($value['dish_name']); ?></td>
                             <td><?php echo($value['description']); ?></td>
                             <td><?php echo($value['price']); ?></td>
+                            <td><a class="fa fa-remove" href="/admin/products/delete_menu_item/<?php echo($value['id']); ?>" value="Delete"/></td>
                         </tr>
                         </tbody>
                     <?php } ?>
@@ -201,45 +213,5 @@
     </div>
 </div>
 
-
 </body>
 </html>
-
-
-<!--<form method="post" action="">-->
-<!--    <button>Получить список меню</button>-->
-<!--    <table>-->
-<!--        <caption> Перечень меню</caption>-->
-<!--        --><?php
-//        //NТАНЯ ИСПРАВИТ!!!
-//        //require 'lib/connect.php';
-//        // SQL-запрос
-//        //$sql = "SELECT * FROM menu ORDER BY date DESC";
-//
-//        // Выполнить запрос (набор данных $rs содержит результат)
-//         //$rs = query($sql);
-//
-//        // echo $rs;
-//        //App::$db->query($sql);
-//        // Цикл по recordset $rs
-//        // Каждый ряд становится массивом ($row) с помощью функции mysql_fetch_array
-//       /* while($row = fetch_array($rs)) {
-//            // Записать значение столбца FirstName (который является теперь массивом $row)
-//            echo"<tr>";
-//            echo"<tr>";
-//            echo"".$row['znachenie']."";
-//            echo"".$row['znachenie']."";
-//            echo"".$row['znachenie']."";
-//            echo"".$row['znachenie']."";
-//            echo"</td>";
-//            echo"</tr>";
-//
-//        }   */
-//       ?>
-<!---->
-<!---->
-<!--    </table>-->
-<!---->
-<!--</form>-->
-<!---->
-<?php //?>
