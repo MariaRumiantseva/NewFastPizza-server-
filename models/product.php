@@ -2,8 +2,6 @@
 
 class Product extends Model
 {
-    //написать функции-запросы к БД для меню
-
     //получить список всех имеющихся наименований меню (menu)
     public static function getProductsList()
     {

@@ -2,8 +2,6 @@
 
 class User extends Model
 {
-    //написать функции-запросы к БД для пользователей
-
     //получение пользователя по логину-номеру телефона (users)
     public function getUserByLogin($login)
     {

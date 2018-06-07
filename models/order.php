@@ -212,4 +212,35 @@ class Order extends Model
         return null;
     }
 
+    //получить сумму текущего заказа ID - номер заказа
+    public static function getSumCurrentOrder($id)
+    {
+        if (!$id) {
+            return null;
+        }
+        $sql = "SELECT menu.price from menu, order_details WHERE order_details.order_id=$id AND order_details.dish_id=menu.id";
+        if (isset($sql)) {
+            $prices = App::$db->query($sql);
+        } else {
+            echo "ERROR sql has not result!!!";
+            return null;
+        }
+        $sql2 = "SELECT quantity FROM order_details WHERE order_id=$id";
+        if (isset($sql2)) {
+            $quantities = App::$db->query($sql2);
+        } else {
+            echo "ERROR sql2 has not result!!!";
+            return null;
+        }
+        $sum_order = 0;
+        for ($x = 0; $x < count($prices); $x++) {
+            foreach ($prices[$x] as $inner_key => $value) {
+                foreach ($quantities[$x] as $inner_key => $val) {
+                    $sum_order += $val * $value;
+                }
+            }
+        }
+        return $sum_order;
+    }
+
 }

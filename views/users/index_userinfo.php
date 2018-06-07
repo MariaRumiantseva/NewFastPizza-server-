@@ -173,25 +173,24 @@
                     <em>Monday - Friday</em>
                 </div>
                 <div class="col-xs-6">
-                    <em>09:00 - 23:00h</em>
+                    <em>09:00 - 21:00h</em>
                 </div>
                 <div class="col-xs-6">
-                    <em>Saturday</em>
+                    <em>Saturday-Sunday</em>
                 </div>
                 <div class="col-xs-6">
-                    <em>12:00 - 18:00h</em>
+                    <em>11:00 - 23:00h</em>
                 </div>
             </div>
         </div><!-- .col-md-6 -->
         <div class="col-md-6 responsive-column text-right">
             <h2 class="footer-heading text-uppercase">Our Address</h2>
             <address>
-                Pizzeria Head Office<br>
-                54866 2nd Road NY 48766<br>
-                Ney York, U.S.A
+                600000 Gorky street, 10<br>
+                Nizhny Novgorod, Russia
                 <div class="margin-20"></div>
-                Make Reservations: 0 800 111 555 666<br>
-                Email: info@yourdomain.com
+                Make Reservations: 8 900 100 5566<br>
+                Email: info@newfastpizza.com
             </address>
         </div><!-- .col-md-6 -->
     </div>

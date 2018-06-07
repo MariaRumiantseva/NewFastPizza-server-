@@ -10,7 +10,6 @@ class OrdersController extends Controller{
 
     //вывод информации о доставке
     public function index(){
-        //получить данные из БД о доставке - записать в $data
     }
 
     //добавить товар в корзину (Session)
