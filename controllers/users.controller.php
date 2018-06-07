@@ -100,6 +100,21 @@ class UsersController extends Controller
         Router::redirect('/admin/users/');
     }
 
+    //обновить статус водителя
+    public function driver_status_update()
+    {
+        if ($_POST) {
+            $order_status = $_POST['selectvalue2'];
+            if ($order_status != 'Off work') {
+                $this->model->setDriverStatus(Session::get('login'), $order_status);
+            } else {
+                Session::destroy();
+                Router::redirect('/products/');
+            }
+        }
+        Router::redirect('/products/');
+    }
+
     //выход клиента из системы
     public function client_logout()
     {

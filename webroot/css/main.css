@@ -2729,6 +2729,7 @@ input[type=submit] {
   /*font-family: 'Vollkorn', serif;*/
   position: relative;
   font-size: 20px;
+  color: #FFFFFF;
 }
 
 .status-variants {

@@ -13,6 +13,10 @@ class ProductsController extends Controller
     {
         // Получить все товары (все пиццы)
         $this->data['menu'] = Product::getProductsList();
+        if (Session::get('role') == 'driver') {
+            $this->data['activeorder'] = Order::getActiveOrderForDriver(Session::get('login'));
+            $this->data['clientinfo'] = User::getClientInfo(Session::get('login'),$this->data['activeorder']);
+        }
     }
 
     /*

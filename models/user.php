@@ -99,5 +99,36 @@ class User extends Model
     }
 
     //изменение рабочего статуса для водителя (drivers -> status)
+    public function setDriverStatus($driver_login, $status)
+    {
+        if ($status == 'Free' OR $status == 'Busy' OR $status == 'Off work')
+        {
+            $query = "SELECT id FROM users WHERE login = '$driver_login' AND role = 'driver'";
+            if (isset($query)) {
+                $driver_id = App::$db->query($query);
+                if (isset($driver_id)) {
+                    $driver_id = (int)$driver_id+1;
+                    $query = "UPDATE users SET status='$status' WHERE id = '$driver_id'";
+                    if (isset($query)) {
+                        return App::$db->query($query);
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
+    //получить информацию о клиента по логину водителя
+    public static function getClientInfo($login, $order)
+    {
+        if ((!$login) || (!$order)) {
+            return null;
+        }
+        $client_id = $order[0]['client_id'];
+        $query = "SELECT * FROM users WHERE id = $client_id";
+        if ($info = App::$db->query($query)) {
+            return $info;
+        }
+        return null;
+    }
 }

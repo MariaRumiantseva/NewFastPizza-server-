@@ -187,9 +187,27 @@ class Order extends Model
         if ((!$id) || (!$status)) {
             return null;
         }
-        $query = "UPDATE orders SET order_status=$status WHERE id=$id";
+        $query = "UPDATE orders SET order_status='{$status}' WHERE id=$id";
         if ($query = App::$db->query($query)) {
-            return App::$db->query($query);
+            return $query;
+        }
+        return null;
+    }
+
+    //показать информацию об активном заказе для водителя (orders)
+    public static function getActiveOrderForDriver($login)
+    {
+        if (!$login) {
+            return null;
+        }
+        $query = "SELECT id FROM users WHERE login = '{$login}' AND role = 'driver' limit 1";
+        $driver_id = App::$db->query($query);
+        if (isset($driver_id)) {
+            $driver_id = $driver_id[0]['id'];
+            $query = "SELECT * FROM orders WHERE driver_id = '{$driver_id}' AND order_status != 'Delivered' limit 1";
+            if ($query = App::$db->query($query)) {
+                return $query;
+            }
         }
         return null;
     }

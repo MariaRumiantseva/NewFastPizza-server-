@@ -77,4 +77,16 @@ class OrdersController extends Controller{
             $this->model->selectDriverForOrder($id_order);
         }
     }
+
+    //обновить статус заказа
+    public function order_status_update()
+    {
+        if ($_POST) {
+            $order_status = $_POST['selectvalue1'];
+            $order = $this->model->getActiveOrderForDriver(Session::get('login'));
+            $order_id = $order[0]["id"];
+            $this->model->addOrderStatus($order_id, $order_status);
+        }
+        Router::redirect('/products/');
+    }
 }
