@@ -29,7 +29,7 @@
     </div>
 </header>
 
-<div class="row-fluid">
+<br class="row-fluid">
     <div class="span6">
         <!-- block -->
         <div class="block">
@@ -82,6 +82,7 @@
         </div>
         <!-- /block -->
     </div>
+    <br></br>
     <div class="span6">
         <!-- block -->
         <div class="block">
@@ -121,6 +122,7 @@
         </div>
         <!-- /block -->
     </div>
+    <br></br>
     <div class="span6">
         <!-- block -->
         <div class="block">
@@ -164,6 +166,7 @@
         </div>
         <!-- /block -->
     </div>
+    <br></br>
     <div class="span6">
         <!-- block -->
         <div class="block">
@@ -191,15 +194,20 @@
                             <td><?php echo($value['dish_name']); ?></td>
                             <td><?php echo($value['description']); ?></td>
                             <td><?php echo($value['price']); ?></td>
-                            <td><a class="fa fa-remove" href="/admin/products/delete_menu_item/<?php echo($value['id']); ?>" value="Delete"/></td>
+                            <td><a class="fa fa-remove"
+                                   href="/admin/products/delete_menu_item/<?php echo($value['id']); ?>"
+                                   value="Delete"/></td>
                         </tr>
                         </tbody>
                     <?php } ?>
                     <tr>
-                        <td><input method="post" type="submit" a href="/admin/products/addItem/"value="Add menu item"></td>
-                        <td><input name="dish_name" type="text" placeholder="Dish name"></td>
-                        <td><input name="description" style="width:400px;" type="text" placeholder="Description"></td>
-                        <td><input name="price" style="width:100px;" type="text" placeholder="Price"></td>
+                        <form method="post" action="/admin/products/add_menu_item/" class="text-center">
+                            <td><input type="submit" value="Add Menu Item"/>
+                            <td><input name="dish_name" type="text" placeholder="Dish name"></td>
+                            <td><input name="description" style="width:400px;" type="text" placeholder="Description">
+                            </td>
+                            <td><input name="price" style="width:100px;" type="text" placeholder="Price"></td>
+                        </form>
                     </tr>
                 </table>
                 <?php } else { ?>

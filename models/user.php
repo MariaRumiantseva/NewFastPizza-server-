@@ -29,16 +29,14 @@ class User extends Model
     }
 
     //добавление адреса для пользователя (users)
-    public function addUserAddress($client_id, $data)
+    public function addUserAddress($login, $address)
     {
-        //получаем из $data адрес пользователя
-        $address = $this->db->escape($data['address']);
-        $query = "update clients set address=$address where id='{$client_id}''";
-        if (isset($query)) {
-            return $this->db->query($query);
-        } else {
-            return null;
+        $address = $this->db->escape($address);
+        $query = "UPDATE users SET address=$address WHERE login='{$login}''";
+        if ($query = $this->db->query($query)) {
+            return $query;
         }
+        return null;
     }
 
     //добавление нового клиента

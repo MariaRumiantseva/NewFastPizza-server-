@@ -5,6 +5,7 @@ class OrdersController extends Controller{
     public function __construct($data = array())
     {
         parent::__construct($data);
+        $this->model = new Order();
     }
 
     //вывод информации о доставке
@@ -60,5 +61,20 @@ class OrdersController extends Controller{
         }
         Session::set('cart', $arrayItems);
         Router::redirect('/orders/');
+    }
+
+    //добавить заказ от клиента в базу данных
+    public function addOrder() {
+        if ($_POST && isset($_POST['address']) && isset($_POST['house']) && isset($_POST['hour']) && isset($_POST['minute'])) {
+            //добавляем адрес клиента в базу
+            $address = $_POST['address'] + $_POST['house'];
+            User::addUserAddress(Session::get('login'), $address);
+            //добавляем заказ
+            $cart = Session::get('cart');
+            $login = Session::get('login');
+            $id_order = $this->model->addOrder($_POST['hour'], $_POST['minute'], $cart, $login);
+            //назначаем заказ на свободного водителя
+            $this->model->selectDriverForOrder($id_order);
+        }
     }
 }

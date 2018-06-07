@@ -24,60 +24,18 @@ class Product extends Model
     }
 
     //добавить наименование меню (menu)
-    public function add($item_id, $data)
+    public function addItem($data)
     {
         if (!isset($data['dish_name']) || !isset($data['description']) || !isset($data['price'])) {
             return null;
         }
-
-        $item_id = (int)$item_id;
         $dish_name = $this->db->escape($data['dish_name']);
         $description = $this->db->escape($data['description']);
         $price = $this->db->escape($data['price']);
 
-        if (!$item_id)
-            $sql = "
-              insert into menu
-                set dish_name = {$dish_name},
-                    description = '{$description}',
-                    price = '{$price}'
-            ";
-        else
-            $sql = "
-              update into menu
-                set dish_name = {$dish_name},
-                    description = '{$description}',
-                    price = '{$price}'
-                    where id = {$item_id}
-            ";
-
-        return $this->db->query($sql);
-//        if (!isset($data['price']) || !isset($data['description'])) {
-////            return null;
-////        }
-//
-//        $item_id = (int)$item_id;
-//        $description = $this->db->escape($data['description']);
-//        $msg = $this->db->escape($data['price']);
-//
-//        $reply_to = 0;
-//        if (isset($data['dish_name'])) {
-//            $reply_to = $this->db->escape($data['dish_name']);
-//        }
-//
-//        $sql = "
-//          insert into menu
-//            set id = {$item_id},
-//                dish_name = {$reply_to},
-//                description = '{$description}',
-//                price = '{$msg}'
-//        ";
-//
-//        if ($this->db->query($sql)) {
-//            return $this->db->insertId();
-//        } else {
-//            return false;
-//        }
+        $sql = "INSERT INTO menu SET dish_name = '{$dish_name}', description = '{$description}', price = '{$price}'";
+        if ($query = $this->db->query($sql))
+            return $query;
     }
 
     //удалить наименование меню (menu)
@@ -87,7 +45,9 @@ class Product extends Model
             return null;
         }
         $sql = "DELETE FROM menu WHERE id = {$item_id} ";
-        return App::$db->query($sql);
+        if ($query = App::$db->query($sql)) {
+            return $query;
+        }
+        return null;
     }
-
 }

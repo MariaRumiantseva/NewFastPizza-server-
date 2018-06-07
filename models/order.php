@@ -2,8 +2,6 @@
 
 class Order extends Model
 {
-    //написать функции-запросы к БД для заказов
-
     //получить список заказов (orders)
     public static function getOrdersList()
     {
@@ -57,10 +55,9 @@ class Order extends Model
     }
 
     //удалить заказ (orders)
-    public function delete($id)
+    public function deleteOrder($id)
     {
-        $id = (int)$id;
-        $sql = "delete from orders where id = {$id}";
+        $sql = "DELETE FROM orders WHERE id = $id";
         return $this->db->query($sql);
     }
 
@@ -80,7 +77,7 @@ class Order extends Model
     }
 
     //добавить наименование меню в корзину клиента (order_details)
-    public function addProductToCart($client_id/*$order_id*/, $dish_id, $quantity)
+    public function addProductToCart($client_id, $dish_id, $quantity)
     {
         if (!$client_id and /*!$order_id and*/
             !$dish_id and !$quantity) {
@@ -168,39 +165,33 @@ class Order extends Model
     }
 
     //распределить заказ на водителя (orders -> driver_id)
-    public function order_select_driver($id, $driver_id)
+    public function selectDriverForOrder($order_id)
     {
-        if (!$id) {
+        if (!$order_id) {
             return null;
         }
-        if (!$driver_id) {
-            return null;
+        $query = "SELECT id FROM users WHERE role='driver' and status='Free' limit 1";
+        $driver_id = App::$db->query($query);
+        if (isset($driver_id)) {
+            $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$order_id";
+            if ($query = App::$db->query($query)) {
+                return $query;
+            }
         }
-        $id = (int)$id;
-        $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$id";
-        if (isset($query)) {
-            return App::$db->query($query);
-        } else {
-            return null;
-        }
+        return null;
     }
 
     //добавить статус доставки (orders -> order_status)
-    public function order_status($id, $status)
+    public function addOrderStatus($id, $status)
     {
-        if (!$id) {
+        if ((!$id) || (!$status)) {
             return null;
         }
-        if (!$status) {
-            return null;
-        }
-        $id = (int)$id;
         $query = "UPDATE orders SET order_status=$status WHERE id=$id";
-        if (isset($query)) {
+        if ($query = App::$db->query($query)) {
             return App::$db->query($query);
-        } else {
-            return null;
         }
+        return null;
     }
 
 }

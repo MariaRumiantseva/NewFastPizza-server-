@@ -75,13 +75,13 @@
     <div class="container">
         <h1 class="bottom-line">Delivery</h1>
         <h3 class="text-center text-uppercase delivery-info">Enter the address where you want the order delivered</h3>
-        <form class="text-center">
+        <form method="post" action="/order/addOrder/" class="text-center">
             <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" name="email" placeholder="Street Address">
+                    <input type="text" id="address" name="address" placeholder="Street Address">
                 </div>
                 <div class="col-sm-6">
-                    <input type="text" name="room" placeholder="House Number">
+                    <input type="text" id="house" name="house" placeholder="House Number">
                 </div>
             </div>
             <h3 class="text-center text-uppercase delivery-info">Enter the time when you want the order delivered</h3>
@@ -92,10 +92,10 @@
                             <div class="margin-20"></div>
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" name="state" placeholder="HH">
+                            <input type="text" id="hour" name="hour" placeholder="HH">
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" name="zip" placeholder="MM">
+                            <input type="text" id="minute" name="minute" placeholder="MM">
                         </div>
                         <div class="col-xs-4">
                             <div class="margin-20"></div>
@@ -103,9 +103,9 @@
                     </div>
                 </div>
             </div>
-        </form>
+<!--        </form>-->
         <div class="section-delimiter"></div>
-        <form class="text-center">
+<!--        <form class="text-center">-->
             <?php if(count(Session::get('cart'))) { ?>
             <h3 class="text-uppercase delivery-info">Please, check your order</h3>
             <section>
@@ -132,22 +132,20 @@
                                         </p>
                                         <p>
                                             <a href="/orders/deleteOrderItem/<?php echo($inner_key);?>"
-                                               class="gallery-detail-icon"><i class="fa fa-remove" style="position:absolute; right:0;"></i></a>
+                                               class="gallery-detail-icon"><i class="fa fa-remove"></i></a>
                                         </p>
                                     </div>
                                 </div>
                             </div><!-- .gallery-item -->
                         <?php } ?>
                     </div><!-- .gallery -->
-                    <div class="section-delimiter"></div>
                     <div class="margin-10"></div>
                 </div><!-- .container -->
             </section>
             <div class="margin-30"></div>
-            <a href="personal_area.html" class="button-yellow button-long with-right-arrow form-submit-trigger">MAKE YOUR ORDER</a>
+                <input type="submit" class="text-center" class="button-yellow button-long with-right-arrow form-submit-trigger" value="MAKE YOUR ORDER"/>
             <?php } else {?><h3 class="text-uppercase delivery-info">You haven't chosen any items yet</h3><?php } ?>
         </form>
-        <div class="margin-20"></div>
     </div><!-- .container -->
 </section>
 
