@@ -123,32 +123,48 @@ class Order extends Model
         if (!$login) {
             return null;
         }
-        $query = "SELECT id FROM users WHERE login = $login AND role = 'client'";
-        if (isset($query)) {
-            $client_id = App::$db->query($query);
-            if (isset($client_id)) {
-                $query = "SELECT * FROM orders WHERE client_id = '{$client_id[0]['id']}' AND order_status != 'Delivered'";
-                if (isset($query)) {
-                    return App::$db->query($query);
+        $query = "SELECT id FROM users WHERE login = $login AND role = 'client' limit 1";
+        $client_id = App::$db->query($query);
+        if (isset($client_id)) {
+            $query = "SELECT * FROM orders WHERE client_id = '{$client_id[0]['id']}' AND order_status != 'Delivered'";
+            $active_orders = App::$db->query($query);
+            if (isset($active_orders)) {
+                foreach ($active_orders as $inner_key => $value) {
+                    $queryDriver = "SELECT login FROM users WHERE id = '{$value['driver_id']}' limit 1";
+                    $driver_login = App::$db->query($queryDriver);
+                    if (isset($driver_login)) {
+                        $active_orders[$inner_key]['driver_id'] = $driver_login[0]['login'];
+                    }
                 }
+                return $active_orders;
             }
         }
         return null;
     }
 
-
     //вывод истории заказов для клиента (orders)
-    public function order_history($client_id)
+    public static function getOrderHistory($login)
     {
-        if (!$client_id) {
+        if (!$login) {
             return null;
         }
-        $query = "SELECT * FROM orders WHERE client_id = $client_id";
-        if (isset($query)) {
-            return App::$db->query($query);
-        } else {
-            return null;
+        $query = "SELECT id FROM users WHERE login = $login AND role = 'client' limit 1";
+        $client_id = App::$db->query($query);
+        if (isset($client_id)) {
+            $query = "SELECT * FROM orders WHERE client_id = '{$client_id[0]['id']}' AND order_status != 'Not delivered'";
+            $active_orders = App::$db->query($query);
+            if (isset($active_orders)) {
+                foreach ($active_orders as $inner_key => $value) {
+                    $queryDriver = "SELECT login FROM users WHERE id = '{$value['driver_id']}' limit 1";
+                    $driver_login = App::$db->query($queryDriver);
+                    if (isset($driver_login)) {
+                        $active_orders[$inner_key]['driver_id'] = $driver_login[0]['login'];
+                    }
+                }
+                return $active_orders;
+            }
         }
+        return null;
     }
 
     //распределить заказ на водителя (orders -> driver_id)

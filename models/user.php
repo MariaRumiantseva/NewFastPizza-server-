@@ -61,8 +61,26 @@ class User extends Model
     }
 
     //вывод списка всех зарегистрированных пользователей (users)
+    public function getClients()
+    {
+        $query = "SELECT * FROM users WHERE role = 'client'";
+        if (isset($query)) {
+            return App::$db->query($query);}
+        else {
+            return null;
+        }
+    }
 
     //вывод списка всех водителей (drivers)
+    public function getDrivers()
+    {
+        $query = "SELECT * FROM users WHERE role = 'driver'";
+        if (isset($query)) {
+            return App::$db->query($query);
+        } else {
+            return null;
+        }
+    }
 
     //добавление нового водителя (drivers)
 

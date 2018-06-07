@@ -72,7 +72,6 @@
             <input type="submit" class="text-center" class="button-yellow button-long with-right-arrow form-submit-trigger" value="Sign In"/>
         </form>
         <div class="margin-20"></div>
-
     </div><!-- .container -->
 </section>
 

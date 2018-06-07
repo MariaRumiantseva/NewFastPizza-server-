@@ -60,10 +60,7 @@
                                 <a href="/users/index_userinfo/">Personal Area</a>
                             </li>
                             <li>
-                                <a href="delivery.html">Delivery</a>
-                            </li>
-                            <li>
-                                <div class="menu-item has-small-label cart-trigger"><i class="fa fa-shopping-cart"></i><span class="small-label"><span>2</span></span></div>
+                                <a href="/orders/">Delivery</a>
                             </li>
                         </ul>
                     </nav>
@@ -101,38 +98,69 @@
         <div class="personal-info" class="row">
             <div class="margin-40"></div>
             <?php if ($data["activeorder"]) { ?>
-                <div class="col-md-6">
-                    <div class="text-left">
-                        <p>Driver</p>
-                        <p>Delivery time</p>
-                        <p>Delivery date</p>
-                        <p>Order Status</p>
+                <?php foreach ($data["activeorder"] as $inner_key => $value) { ?>
+                    <div class="col-md-6">
+                        <div class="text-left">
+                            <p>Driver</p>
+                            <p>Delivery time</p>
+                            <p>Delivery date</p>
+                            <p>Order Status</p>
+                            <div class="margin-20"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="text-right">
-                        <p><em>"Driver Name"</em></p>
-                        <p><em><?php echo $data["activeorder"][0]["delivery_time"]; ?></em></p>
-                        <p><em><?php echo $data["activeorder"][0]["delivery_date"]; ?></em></p>
-                        <p><em><?php echo $data["activeorder"][0]["order_status"]; ?></em></p>
+                    <div class="col-md-6">
+                        <div class="text-right">
+                            <p><em><?php echo $value["driver_id"]; ?></em></p>
+                            <p><em><?php echo $value["delivery_time"]; ?></em></p>
+                            <p><em><?php echo $value["delivery_date"]; ?></em></p>
+                            <p><em><?php echo $value["order_status"]; ?></em></p>
+                            <div class="margin-20"></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="margin-20"></div>
+                <?php } ?>
             <?php } else { ?>
-                <p><em><div class="text-center">You have no active orders</div></em></p>
+                <p><em>
+                        <div class="text-center">You have no active orders</div>
+                    </em></p>
             <?php } ?>
         </div>
     </div><!-- .row -->
 
     <div class="section-delimiter"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="text-center">
-                <a class="button-yellow button-long with-right-arrow form-submit-trigger">See order history</a>
-            </div>
+    <div class="container">
+        <h1 class="bottom-line">Order History</h1>
+        <div class="personal-info" class="row">
+            <div class="margin-40"></div>
+            <?php if ($data["orderhistory"]) { ?>
+                <?php foreach ($data["orderhistory"] as $inner_key => $value) { ?>
+                    <div class="col-md-6">
+                        <div class="text-left">
+                            <p>Driver</p>
+                            <p>Delivery time</p>
+                            <p>Delivery date</p>
+                            <p>Order Status</p>
+                            <div class="margin-20"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-right">
+                            <p><em><?php echo $value["driver_id"]; ?></em></p>
+                            <p><em><?php echo $value["delivery_time"]; ?></em></p>
+                            <p><em><?php echo $value["delivery_date"]; ?></em></p>
+                            <p><em><?php echo $value["order_status"]; ?></em></p>
+                            <div class="margin-20"></div>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <p><em>
+                        <div class="text-center">You have ordered nothing</div>
+                    </em></p>
+            <?php } ?>
         </div>
-    </div>
-
+    </div><!-- .row -->
     </div>
 </section>
 

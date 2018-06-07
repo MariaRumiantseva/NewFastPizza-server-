@@ -9,6 +9,13 @@ class UsersController extends Controller
         $this->model = new User();
     }
 
+    public function admin_index() {
+        $this->data['drivers'] = $this->model->getDrivers();
+        $this->data['clients'] = $this->model->getClients();
+        $this->data['orders'] = Order::getOrdersList();
+        $this->data['menu'] = Product::getProductsList();
+    }
+
     //вход в систему для клиента
     public function client_login()
     {
@@ -39,11 +46,13 @@ class UsersController extends Controller
         }
     }
 
-    //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе
+    //личный кабинет: вывод информации о пользователе + вывод информации об активном заказе + история заказов
     public function index_userinfo()
     {
-        $this->data['userinfo'] = User::getUser(Session::get('login'));
-        $this->data['activeorder'] = Order::getActiveOrder(Session::get('login'));
+        $login = Session::get('login');
+        $this->data['userinfo'] = User::getUser($login);
+        $this->data['activeorder'] = Order::getActiveOrder($login);
+        $this->data['orderhistory'] = Order::getOrderHistory($login);
     }
 
     //вход в систему для водителя
@@ -71,13 +80,10 @@ class UsersController extends Controller
                 Session::set('role', $user['role']);
                 Router::redirect('/admin/users/');
             }
-           else
-               Router::redirect('/admin/users/login');
+            else {
+                Router::redirect('/admin/users/login/');
+            }
         }
-    }
-
-    public function admin_index()
-    {
     }
 
     //выход клиента из системы
@@ -98,7 +104,6 @@ class UsersController extends Controller
     public function admin_logout()
     {
         Session::destroy();
-        Router::redirect('/admin/users/login');
+        Router::redirect('/admin/users/login/');
     }
-
 }
