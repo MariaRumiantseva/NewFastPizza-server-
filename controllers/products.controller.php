@@ -15,7 +15,7 @@ class ProductsController extends Controller
         $this->data['menu'] = Product::getProductsList();
         if (Session::get('role') == 'driver') {
             $this->data['activeorder'] = Order::getActiveOrderForDriver(Session::get('login'));
-            $order_id = $this->data['activeorder'][0]['client_id'];
+            $order_id = $this->data['activeorder'][0]['id'];
             //добавление цены к заказу
             $this->data['activeorder'][0]['price']=Order::getSumCurrentOrder($order_id);
             $this->data['clientinfo'] = User::getClientInfo(Session::get('login'),$this->data['activeorder']);
