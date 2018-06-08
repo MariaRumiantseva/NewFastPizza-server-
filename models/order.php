@@ -29,9 +29,10 @@ class Order extends Model
         if (!isset($hour) || !isset($minute) || !isset($cart) || !isset($login)) {
             return false;
         }
-        $sql = "SELECT COUNT(*) FROM orders";
-        $id = $this->db->query($sql);
-        $id = (int)$id[0] + 1;
+        $sql = "SELECT * FROM orders WHERE id";
+        $orders = $this->db->query($sql);
+        $id = count($orders);
+        $id = $id + 1;
         $client_id = User::getUser($login);
         $client_id = $client_id['id'];
         $driver = $this->selectDriverForOrder();

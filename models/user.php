@@ -41,11 +41,12 @@ class User extends Model
     public function addClient($data, $id = null)
     {
         $login = $this->db->escape($data['login']);
-        $password = 'jd7sj3sdkd964he7e' + $this->db->escape($data['password']);
+        $password = $this->db->escape($data['password']);
         $name = $this->db->escape($data['name']);
+        $password = md5(Config::get('salt') . $password);
         $sql = "INSERT INTO users 
                 SET login = '{$login}', 
-                    password = md5({$password}), 
+                    password = '{$password}', 
                     role = 'client',
                     name = '{$name}',
                     address = ''";
@@ -99,16 +100,14 @@ class User extends Model
     //изменение рабочего статуса для водителя (drivers -> status)
     public function setDriverStatus($driver_login, $status)
     {
-        if ($status == 'Free' OR $status == 'Busy' OR $status == 'Off work')
-        {
+        if ($status == 'Free' OR $status == 'Busy' OR $status == 'Off work') {
             $query = "SELECT id FROM users WHERE login = '$driver_login' AND role = 'driver'";
             if (isset($query)) {
                 $driver_id = App::$db->query($query);
                 if (isset($driver_id)) {
-                    $driver_id = (int)$driver_id+1;
-                    $query = "UPDATE users SET status='$status' WHERE id = '$driver_id'";
-                    if (isset($query)) {
-                        return App::$db->query($query);
+                    $query = "UPDATE users SET status='$status' WHERE id = '{$driver_id[0]['id']}'";
+                    if ($query = App::$db->query($query)) {
+                        return $query;
                     }
                 }
             }
