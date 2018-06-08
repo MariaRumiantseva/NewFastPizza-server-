@@ -82,8 +82,8 @@ class User extends Model
     public function  addDriver($login, $password)
     {
         $login = $this->db->escape($login);
-        $password = 'jd7sj3sdkd964he7e' + $this->db->escape($password);
-        $sql = "INSERT INTO users SET login = '{$login}', password = md5({$password}), role = 'driver', status = 'Off work'";
+        $password = md5(Config::get('salt') . $password);
+        $sql = "INSERT INTO users SET login = '{$login}', password = '{$password}', role = 'driver', status = 'Off work'";
         return $this->db->query($sql);
     }
 
@@ -122,10 +122,12 @@ class User extends Model
         if ((!$login) || (!$order)) {
             return null;
         }
-        $client_id = $order[0]['client_id'];
-        $query = "SELECT * FROM users WHERE id = $client_id";
-        if ($info = App::$db->query($query)) {
-            return $info;
+        if (array_key_exists('client_id', $order[0])) {
+            $client_id = $order[0]['client_id'];
+            $query = "SELECT * FROM users WHERE id = $client_id";
+            if ($info = App::$db->query($query)) {
+                return $info;
+            }
         }
         return null;
     }

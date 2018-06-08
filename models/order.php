@@ -39,15 +39,17 @@ class Order extends Model
 
         $hour = $hour;
         $minute = $minute;
-        $date = $hour.$minute."00";
-        $time = date('s:i:H', $date);
+        $time = $hour.$minute."00";
+        $time = date('H:i:s',strtotime($time));
+        $date = date("Y-m-d");
 
         if ($id) { // Add new order (in orders, order_details)
             $sql = "INSERT INTO orders
                     SET id = $id,
                     client_id = $client_id,
                     driver_id = $driver_id,
-                    delivery_time = {$date},
+                    delivery_time = '{$time}',
+                    delivery_date = '{$date}',
                     order_status = 'Not delivered'";
 
             if (App::$db->query($sql)) {
