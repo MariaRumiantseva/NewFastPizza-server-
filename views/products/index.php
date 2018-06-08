@@ -88,7 +88,7 @@
 
 <?php if ((Session::get('role') == 'client') || (!Session::get('login'))) { ?>
 <div class="page-title-img">
-    <img class="img-full" alt="page title img" src="/webroot/img/headers/gallery.png">
+    <img class="img-full" alt="page title img" src="/webroot/img/headers/pizza_banner.jpg">
 </div><!-- .page-title-img -->
 
 <section>
@@ -99,7 +99,7 @@
                 <div class="col-md-3 col-sm-6 col-xs-12 gallery-item dark-cover">
                     <div class="product-preview">
                         <div class="product-photo">
-                            <img alt="photo" src="/webroot/img/gallery/gallery8.jpg">
+                            <img alt="photo" src="/webroot/img/gallery/pizza.jpg">
                             <div class="product-price">
                                 <sub>$</sub><?php echo $value["price"]; ?>
                             </div>
@@ -110,7 +110,7 @@
                             <?php if ( Session::get('login') ) { ?>
                             <p>
                                 <?php if (!Session::get('cart')) { $arrayItems = array(); Session::set('cart', $arrayItems); } ?>
-                                <a href="/orders/addOrderItem/<?php echo($value["id"]);?>" class="gallery-detail-icon"><i class="fa fa-check"></i></a>
+                                <a href="/orders/add_order_item/<?php echo($value["id"]);?>" class="gallery-detail-icon"><i class="fa fa-check"></i></a>
                             </p>
                             <?php } ?>
                             <h4 class="gallery-item-heading">

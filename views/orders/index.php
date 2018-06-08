@@ -75,7 +75,7 @@
     <div class="container">
         <h1 class="bottom-line">Delivery</h1>
         <h3 class="text-center text-uppercase delivery-info">Enter the address where you want the order delivered</h3>
-        <form method="post" action="/orders/addOrder/" class="text-center">
+        <form method="post" action="/orders/add_order/" class="text-center">
             <div class="row">
                 <div class="col-sm-6">
                     <input type="text" id="address" name="address" placeholder="Street Address">
@@ -116,7 +116,7 @@
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="product-preview">
                                     <div class="product-photo">
-                                        <img alt="photo" src="/webroot/img/gallery/gallery8.jpg">
+                                        <img alt="photo" src="/webroot/img/gallery/pizza.jpg">
                                         <div class="product-price">
                                             <?php echo $value; ?>
                                         </div>
@@ -131,7 +131,7 @@
                                             <?php echo $value["description"]; ?>
                                         </p>
                                         <p>
-                                            <a href="/orders/deleteOrderItem/<?php echo($inner_key);?>"
+                                            <a href="/orders/delete_order_item/<?php echo($inner_key);?>"
                                                class="gallery-detail-icon"><i class="fa fa-remove"></i></a>
                                         </p>
                                     </div>

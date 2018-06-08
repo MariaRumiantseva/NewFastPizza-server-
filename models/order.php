@@ -29,7 +29,6 @@ class Order extends Model
         if (!isset($hour) || !isset($minute) || !isset($cart) || !isset($login)) {
             return false;
         }
-
         $sql = "SELECT COUNT(*) FROM orders";
         $id = $this->db->query($sql);
         $id = (int)$id[0] + 1;
@@ -40,7 +39,7 @@ class Order extends Model
 
         $hour = $hour;
         $minute = $minute;
-        $date = $hour+$minute+"00";
+        $date = $hour.$minute."00";
         $time = date('s:i:H', $date);
 
         if ($id) { // Add new order (in orders, order_details)
@@ -51,8 +50,7 @@ class Order extends Model
                     delivery_time = {$date},
                     order_status = 'Not delivered'";
 
-            if (App::$db->query($sql))
-            {
+            if (App::$db->query($sql)) {
                 foreach ($cart as $inner_key => $value) {
                     $sql = "INSERT INTO order_details SET order_id = $id, dish_id = $inner_key, quantity = $value";
                     App::$db->query($sql);
@@ -90,14 +88,9 @@ class Order extends Model
     //добавить наименование меню в корзину клиента (order_details)
     public function addProductToCart($client_id, $dish_id, $quantity)
     {
-        if (!$client_id and /*!$order_id and*/
-            !$dish_id and !$quantity) {
+        if (!$client_id and !$dish_id and !$quantity) {
             return null;
         }
-        $client_id = (int)$client_id;
-        // $order_id = (int)$order_id;
-        $dish_id = (int)$dish_id;
-        $quantity = (int)$quantity;
         $sql = "SELECT order_details.* 
                     FROM orders, order_details
                     WHERE orders.client_id =$client_id 
@@ -112,7 +105,7 @@ class Order extends Model
     }
 
     //удалить наименование меню из корзины клиента (order_details)
-    public function delete_dish($dish_id)
+    public function deleteDish($dish_id)
     {
         if (!$dish_id) {
             return null;
@@ -176,19 +169,12 @@ class Order extends Model
     }
 
     //распределить заказ на водителя (orders -> driver_id)
-    public function selectDriverForOrder()//($order_id)
+    public function selectDriverForOrder()
     {
-//        if (!$order_id) {
-//            return null;
-//        }
         $query = "SELECT * FROM users WHERE role='driver' and status='Free' limit 1";
         $driver_id = App::$db->query($query);
         if (isset($driver_id)) {
             return $driver_id[0];
-//            $query = "UPDATE orders SET driver_id=$driver_id WHERE id=$order_id";
-//            if ($query = App::$db->query($query)) {
-//                return $query;
-//            }
         }
         return null;
     }

@@ -9,13 +9,6 @@ class UsersController extends Controller
         $this->model = new User();
     }
 
-    public function admin_index() {
-        $this->data['drivers'] = $this->model->getDrivers();
-        $this->data['clients'] = $this->model->getClients();
-        $this->data['orders'] = Order::getOrdersList();
-        $this->data['menu'] = Product::getProductsList();
-    }
-
     //вход в систему для клиента
     public function client_login()
     {
@@ -55,6 +48,13 @@ class UsersController extends Controller
         $this->data['orderhistory'] = Order::getOrderHistory($login);
     }
 
+    //выход клиента из системы
+    public function client_logout()
+    {
+        Session::destroy();
+        Router::redirect('/products/');
+    }
+
     //вход в систему для водителя
     public function driver_login()
     {
@@ -67,37 +67,6 @@ class UsersController extends Controller
             }
             Router::redirect('/products/');
         }
-    }
-
-    //вход в систему для администратора
-    public function admin_login()
-    {
-        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
-            $user = $this->model->getUserByLogin($_POST['login']);
-            $hash = md5(Config::get('salt') . $_POST['password']);
-            if ($user && $hash == $user['password']) {
-                Session::set('login', $user['login']);
-                Session::set('role', $user['role']);
-                Router::redirect('/admin/users/');
-            }
-            else {
-                Router::redirect('/admin/users/login/');
-            }
-        }
-    }
-
-    //добавление водителя
-    public function admin_add_driver(){
-        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
-            $this->model->addDriver($_POST['login'],$_POST['password']);
-        }
-        Router::redirect('/admin/users/');
-    }
-
-    //удаление водителя
-    public function admin_delete_driver(){
-        $this->model->deleteDriver(App::getRouter()->getParams()[0]);
-        Router::redirect('/admin/users/');
     }
 
     //обновить статус водителя
@@ -115,18 +84,53 @@ class UsersController extends Controller
         Router::redirect('/products/');
     }
 
-    //выход клиента из системы
-    public function client_logout()
-    {
-        Session::destroy();
-        Router::redirect('/products/');
-    }
-
     //выход водителя из системы
     public function driver_logout()
     {
         Session::destroy();
         Router::redirect('/products/');
+    }
+
+    /*
+    * Функции администрирования
+    */
+
+    public function admin_index() {
+        $this->data['drivers'] = $this->model->getDrivers();
+        $this->data['clients'] = $this->model->getClients();
+        $this->data['orders'] = Order::getOrdersList();
+        $this->data['menu'] = Product::getProductsList();
+    }
+
+    //добавление водителя
+    public function admin_add_driver(){
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $this->model->addDriver($_POST['login'],$_POST['password']);
+        }
+        Router::redirect('/admin/users/');
+    }
+
+    //удаление водителя
+    public function admin_delete_driver(){
+        $this->model->deleteDriver(App::getRouter()->getParams()[0]);
+        Router::redirect('/admin/users/');
+    }
+
+    //вход в систему для администратора
+    public function admin_login()
+    {
+        if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $user = $this->model->getUserByLogin($_POST['login']);
+            $hash = md5(Config::get('salt') . $_POST['password']);
+            if ($user && $hash == $user['password']) {
+                Session::set('login', $user['login']);
+                Session::set('role', $user['role']);
+                Router::redirect('/admin/users/');
+            }
+            else {
+                Router::redirect('/admin/users/login/');
+            }
+        }
     }
 
     //выход администратора из системы
